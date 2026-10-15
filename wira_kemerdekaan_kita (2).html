@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wira Kemerdekaan Kita | Our Independence Heroes 🇲🇾</title>
+  
+  <!-- Google Fonts: Baloo 2 (Playful) & Quicksand (Kids-friendly legibility) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800;900&family=Quicksand:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'msia-blue': '#002B7F',
+            'msia-red': '#ED1C24',
+            'msia-yellow': '#FFD100',
+            'msia-cream': '#FFFDF6',
+            'msia-dark': '#0f172a'
+          },
+          fontFamily: {
+            heading: ['"Baloo 2"', 'cursive', 'sans-serif'],
+            body: ['"Quicksand"', 'sans-serif']
+          },
+          boxShadow: {
+            'comic': '4px 4px 0px 0px #000',
+            'comic-lg': '6px 6px 0px 0px #000',
+            'comic-sm': '2px 2px 0px 0px #000'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: #FFFDF6;
+      background-image: radial-gradient(#FFD100 0.8px, transparent 0.8px), radial-gradient(#ED1C24 0.8px, #FFFDF6 0.8px);
+      background-size: 32px 32px;
+      background-position: 0 0, 16px 16px;
+    }
+    h1, h2, h3, h4, h5, .font-heading {
+      font-family: 'Baloo 2', cursive, sans-serif;
+    }
+    @keyframes merdeka-pulse {
+      0%, 100% { box-shadow: 0 0 15px rgba(255, 209, 0, 0.7); }
+      50% { box-shadow: 0 0 30px rgba(237, 28, 36, 0.85); }
+    }
+    .merdeka-glow {
+      animation: merdeka-pulse 2s infinite;
+    }
+  </style>
+</head>
+<body class="text-gray-800 antialiased min-h-screen flex flex-col selection:bg-msia-yellow selection:text-msia-blue">
+
+  <!-- ================= TOP HEADER / NAVIGATION ================= -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b-4 border-black px-3 sm:px-6 py-2.5 shadow-md">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 cursor-pointer select-none" onclick="switchTab('intro')">
+        <div class="w-11 h-11 bg-msia-yellow border-3 border-black rounded-2xl flex items-center justify-center shadow-comic transform rotate-2">
+          <i class="fa-solid fa-flag text-msia-red text-2xl"></i>
+        </div>
+        <div>
+          <h1 id="app-title" class="text-xl sm:text-2xl font-black text-msia-blue leading-none">Wira Merdeka!</h1>
+          <p id="app-subtitle" class="text-xs font-bold text-gray-500">3 Sahabat Pejuang Tanah Air 🇲🇾</p>
+        </div>
+      </div>
+
+      <!-- Unity Meter Widget (Meter Perpaduan) -->
+      <div class="flex items-center gap-2.5 bg-blue-50 border-2 border-black rounded-2xl px-3 py-1.5 shadow-comic-sm">
+        <div class="flex items-center gap-1.5 text-xs font-black text-msia-blue">
+          <i class="fa-solid fa-heart text-msia-red animate-pulse text-sm"></i>
+          <span id="meter-label">Meter Perpaduan:</span>
+        </div>
+        <div class="w-20 sm:w-32 bg-gray-200 border-2 border-black rounded-full h-4 overflow-hidden relative">
+          <div id="unity-progress" class="bg-gradient-to-r from-msia-yellow via-amber-400 to-msia-red h-full transition-all duration-700 ease-out" style="width: 25%;"></div>
+        </div>
+        <span id="unity-percentage" class="text-xs font-black text-msia-blue min-w-[34px] text-right">25%</span>
+      </div>
+
+      <!-- Action Group: Navigation & Bilingual Switcher -->
+      <div class="flex items-center gap-2">
+        <!-- Navigation Buttons -->
+        <nav class="flex items-center gap-1 sm:gap-2">
+          <button id="nav-btn-intro" onclick="switchTab('intro')" class="px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-black rounded-xl border-2 border-black shadow-comic transition-all bg-msia-yellow text-msia-blue">
+            <i class="fa-solid fa-users mr-1"></i> <span id="nav-text-heroes">Wira</span>
+          </button>
+          <button id="nav-btn-timeline" onclick="switchTab('timeline')" class="px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-black rounded-xl border-2 border-black shadow-comic transition-all bg-white hover:bg-gray-100 text-gray-700">
+            <i class="fa-solid fa-route mr-1"></i> <span id="nav-text-timeline">Garis Masa</span>
+          </button>
+          <button id="nav-btn-quiz" onclick="switchTab('quiz')" class="px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-black rounded-xl border-2 border-black shadow-comic transition-all bg-white hover:bg-gray-100 text-gray-700">
+            <i class="fa-solid fa-trophy mr-1"></i> <span id="nav-text-quiz">Kuiz</span>
+          </button>
+        </nav>
+
+        <!-- Dynamic Language Toggle Button -->
+        <button onclick="toggleLanguage()" class="ml-1 px-3 py-1.5 bg-gray-900 text-white hover:bg-black font-black text-xs sm:text-sm rounded-xl border-2 border-black shadow-comic transition transform active:scale-95 flex items-center gap-1.5">
+          <span id="lang-flag">🇬🇧</span>
+          <span id="lang-switch-text">EN</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= MAIN APP VIEW ================= -->
+  <main class="flex-grow max-w-6xl w-full mx-auto p-4 md:p-6">
+
+    <!-- ############################################################### -->
+    <!-- VIEW 1: INTRODUCTION PAGE -->
+    <!-- ############################################################### -->
+    <section id="view-intro" class="space-y-8 block">
+      
+      <!-- HERO BANNER -->
+      <div class="relative overflow-hidden rounded-3xl border-4 border-black bg-gradient-to-r from-msia-blue via-blue-900 to-indigo-900 text-white p-6 sm:p-10 shadow-comic-lg">
+        <div class="absolute -top-10 -right-10 w-40 h-40 bg-msia-yellow rounded-full opacity-20 pointer-events-none"></div>
+        <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-msia-red rounded-full opacity-20 pointer-events-none"></div>
+
+        <div class="relative z-10 grid md:grid-cols-12 gap-6 items-center">
+          <div class="md:col-span-8 space-y-4 text-center md:text-left">
+            <div class="inline-flex items-center gap-2 bg-msia-yellow text-msia-dark border-2 border-black px-3.5 py-1 rounded-full text-xs sm:text-sm font-black uppercase tracking-wider shadow-comic">
+              <span id="hero-pill">🌟 Belajar Sejarah Bersama Wira</span>
+            </div>
+            
+            <h2 id="hero-title" class="text-3xl sm:text-4xl md:text-5xl font-black leading-tight text-white drop-shadow-md">
+              3 Sahabat, 1 Impian:<br><span class="text-msia-yellow underline decoration-wavy decoration-msia-red">MERDEKA!</span>
+            </h2>
+            
+            <p id="hero-desc" class="text-sm sm:text-base md:text-lg text-blue-100 font-medium max-w-xl">
+              Tahukah adik-adik? Kemerdekaan negara kita tercinta dicapai bukan dengan senjata, tetapi melalui <strong>kebijaksanaan, tolak ansur, dan perpaduan erat</strong> ketiga-tiga bapa kemerdekaan ini!
+            </p>
+
+            <div class="pt-2 flex flex-wrap gap-3 justify-center md:justify-start items-center">
+              <button onclick="triggerMerdekaShout()" class="merdeka-glow group px-6 py-3.5 bg-msia-yellow hover:bg-yellow-300 text-msia-blue border-3 border-black rounded-2xl font-black text-base sm:text-lg shadow-comic transform transition active:scale-95 flex items-center gap-2.5">
+                <i class="fa-solid fa-bullhorn text-msia-red text-xl group-hover:rotate-12 transition-transform"></i>
+                <span id="btn-merdeka-chant">Laungkan MERDEKA! 🗣️</span>
+              </button>
+              
+              <button onclick="switchTab('timeline')" class="px-5 py-3.5 bg-white hover:bg-gray-100 text-gray-900 border-2 border-black rounded-2xl font-black text-sm shadow-comic transition active:scale-95 flex items-center gap-2">
+                <span id="btn-explore-timeline">Teroka Garis Masa</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Character Avatars Collage -->
+          <div class="md:col-span-4 flex justify-center">
+            <div class="relative bg-white/10 backdrop-blur-md p-5 rounded-3xl border-2 border-white/40 text-center shadow-inner max-w-xs w-full">
+              <div class="flex justify-center -space-x-3 mb-3">
+                <div class="w-16 h-16 rounded-full bg-yellow-400 border-2 border-black flex items-center justify-center text-3xl shadow-comic">
+                  👓
+                </div>
+                <div class="w-20 h-20 rounded-full bg-red-400 border-2 border-black flex items-center justify-center text-4xl shadow-comic z-10 -translate-y-1">
+                  👑
+                </div>
+                <div class="w-16 h-16 rounded-full bg-blue-400 border-2 border-black flex items-center justify-center text-3xl shadow-comic">
+                  🌺
+                </div>
+              </div>
+              <p id="badge-unity-symbol" class="text-xs font-black text-yellow-300 uppercase tracking-widest">Simbol Muhibbah Sejati</p>
+              <p id="badge-unity-sub" class="text-xs text-blue-100 mt-1 font-medium">Melayu, Cina & India bersatu demi masa depan negara tercinta!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUDIO CHANT NOTIFICATION BOX -->
+      <div id="audio-toast" class="hidden bg-yellow-100 border-3 border-black rounded-2xl p-4 shadow-comic flex items-center justify-between gap-4 transition-all">
+        <div class="flex items-center gap-3">
+          <span class="text-3xl">🎉</span>
+          <div>
+            <h4 class="font-black text-msia-blue text-base">"MERDEKA! MERDEKA! MERDEKA! (7x)"</h4>
+            <p id="toast-text" class="text-xs text-gray-700">Laungan keramat Tunku pada 31 Ogos 1957 disambut sorakan ribuan rakyat di Stadium Merdeka!</p>
+          </div>
+        </div>
+        <button onclick="document.getElementById('audio-toast').classList.add('hidden')" class="p-1 text-gray-500 hover:text-black">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- 3 HERO PROFILE CARDS -->
+      <div>
+        <div class="text-center max-w-xl mx-auto mb-8">
+          <span id="hero-section-tag" class="bg-red-100 text-msia-red border border-red-300 px-3 py-1 rounded-full text-xs font-black uppercase">Tokoh Kebanggaan Kita</span>
+          <h3 id="hero-section-title" class="text-2xl sm:text-3xl font-black text-msia-blue mt-1">Kenali 3 Wira Kemerdekaan Kita</h3>
+          <p id="hero-section-desc" class="text-xs sm:text-sm text-gray-600">Klik setiap kad wira untuk membaca kisah hebat dan menaikkan Meter Perpaduan!</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6" id="heroes-cards-container">
+          <!-- Injected via JavaScript dynamically for instant language reactivity -->
+        </div>
+      </div>
+
+      <!-- FUN FACT CALLOUT CARD -->
+      <div class="bg-msia-yellow border-4 border-black rounded-3xl p-6 shadow-comic flex flex-col md:flex-row items-center gap-5">
+        <div class="w-16 h-16 rounded-2xl bg-white border-3 border-black flex items-center justify-center text-3xl shrink-0 shadow-comic">
+          💡
+        </div>
+        <div class="space-y-1 text-center md:text-left flex-grow">
+          <h4 id="funfact-title" class="text-xl font-black text-msia-dark">Tahukah Adik-adik di Sekolah?</h4>
+          <p id="funfact-desc" class="text-xs sm:text-sm font-semibold text-gray-800">
+            Semasa rombongan Merdeka ke London pada tahun 1956, kaum wanita dari pelbagai kaum menderma rantai dan gelang emas mereka secara sukarela demi membiayai tambang Tunku dan rakan-rakan seperjuangan!
+          </p>
+        </div>
+        <button onclick="switchTab('timeline')" class="shrink-0 px-5 py-2.5 bg-msia-blue hover:bg-blue-800 text-white font-black text-xs sm:text-sm border-2 border-black rounded-xl shadow-comic transition">
+          <span id="funfact-btn">Lihat Garis Masa ➔</span>
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ############################################################### -->
+    <!-- VIEW 2: INTERACTIVE TIMELINE PAGE -->
+    <!-- ############################################################### -->
+    <section id="view-timeline" class="space-y-8 hidden">
+      
+      <!-- Timeline Header -->
+      <div class="text-center max-w-2xl mx-auto">
+        <span id="timeline-tag" class="bg-yellow-200 text-msia-blue border border-black px-3 py-1 rounded-full text-xs font-black uppercase shadow-sm">
+          🗺️ Kembara Sejarah 1949 - 1957
+        </span>
+        <h2 id="timeline-title" class="text-3xl sm:text-4xl font-black text-msia-blue mt-2">Perjalanan Menuju Hari Kemerdekaan</h2>
+        <p id="timeline-desc" class="text-xs sm:text-sm text-gray-600 mt-1">
+          Ikuti laluan bersejarah bagaimana ketiga-tiga wira kita bersatu hati merealisasikan detik keramat kemerdekaan Persekutuan Tanah Melayu!
+        </p>
+      </div>
+
+      <!-- Timeline Road Container -->
+      <div class="relative max-w-4xl mx-auto py-6" id="timeline-container">
+        <!-- Rendered dynamically via renderTimeline() -->
+      </div>
+
+    </section>
+
+    <!-- ############################################################### -->
+    <!-- VIEW 3: MINI QUIZ / AKTIVITI CILIK -->
+    <!-- ############################################################### -->
+    <section id="view-quiz" class="space-y-8 hidden">
+      
+      <div class="text-center max-w-xl mx-auto">
+        <span id="quiz-tag" class="bg-green-100 text-green-800 border border-black px-3 py-1 rounded-full text-xs font-black uppercase shadow-comic-sm">
+          🎯 Ujian Kefahaman Murid
+        </span>
+        <h2 id="quiz-title" class="text-3xl sm:text-4xl font-black text-msia-blue mt-2">Cabaran Kuiz Wira Merdeka!</h2>
+        <p id="quiz-desc" class="text-xs sm:text-sm text-gray-600">
+          Jawab 3 soalan mudah ini untuk membuka <strong>"Lencana Wira Sejarah Cilik"</strong> dan capai 100% pada Meter Perpaduan!
+        </p>
+      </div>
+
+      <div class="max-w-2xl mx-auto space-y-6" id="quiz-container">
+        <!-- Injected dynamically via renderQuiz() -->
+      </div>
+
+      <!-- BADGE REWARD BOX -->
+      <div id="badge-box" class="hidden max-w-2xl mx-auto bg-gradient-to-r from-yellow-300 via-amber-200 to-yellow-300 border-4 border-black rounded-3xl p-6 text-center shadow-comic-lg">
+        <div class="w-20 h-20 mx-auto bg-white border-3 border-black rounded-full flex items-center justify-center text-4xl shadow-comic mb-3 animate-bounce">
+          🏅
+        </div>
+        <span id="badge-pill" class="bg-msia-red text-white text-xs font-black px-3 py-1 rounded-full uppercase">Tahniah Murid Cemerlang!</span>
+        <h3 id="badge-title" class="text-2xl font-black text-msia-blue mt-1">Kamu Berjaya Memperoleh Lencana Wira Sejarah!</h3>
+        <p id="badge-desc" class="text-xs sm:text-sm text-gray-700 max-w-md mx-auto mt-2">
+          Hebatnya kamu! Kamu telah membuktikan kefahaman tentang jasa Tunku Abdul Rahman, Tun Tan Cheng Lock, dan Tun V.T. Sambanthan. Teruskan menjaga perpaduan negara kita!
+        </p>
+        <div class="mt-4 flex justify-center gap-3">
+          <button onclick="resetQuiz()" class="px-4 py-2 bg-white text-gray-900 border-2 border-black rounded-xl text-xs font-black shadow-comic hover:bg-gray-50 transition">
+            <span id="btn-retry-quiz">Cuba Kuiz Semula 🔄</span>
+          </button>
+          <button onclick="triggerMerdekaShout()" class="px-4 py-2 bg-msia-blue text-white border-2 border-black rounded-xl text-xs font-black shadow-comic hover:bg-blue-900 transition">
+            <span id="btn-shout-again">Laung Merdeka! 🗣️</span>
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="mt-12 bg-white border-t-4 border-black p-6 text-center text-xs font-bold text-gray-600">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">🇲🇾</span>
+        <span id="footer-curriculum">Modul Pembelajaran Interaktif KSSR Sejarah Rendah</span>
+      </div>
+      <p id="footer-motto" class="text-gray-500">
+        Disusun khas untuk anak bangsa Malaysia • Bersatu Kita Teguh, Bercerai Kita Roboh!
+      </p>
+    </div>
+  </footer>
+
+  <!-- ================= SCRIPT & BILINGUAL DATA ================= -->
+  <script>
+    // State
+    let currentLang = 'ms'; // 'ms' or 'en'
+    let unityScore = 25;
+    window.visitedTimeline = false;
+    const cardsOpened = { tunku: false, tan: false, sambanthan: false };
+    const quizState = { 1: null, 2: null, 3: null };
+
+    // Dictionary Data
+    const i18n = {
+      ms: {
+        appTitle: "Wira Merdeka!",
+        appSubtitle: "3 Sahabat Pejuang Tanah Air 🇲🇾",
+        meterLabel: "Meter Perpaduan:",
+        navHeroes: "Wira",
+        navTimeline: "Garis Masa",
+        navQuiz: "Kuiz",
+        heroPill: "🌟 Belajar Sejarah Bersama Wira",
+        heroTitle: "3 Sahabat, 1 Impian:<br><span class=\"text-msia-yellow underline decoration-wavy decoration-msia-red\">MERDEKA!</span>",
+        heroDesc: "Tahukah adik-adik? Kemerdekaan negara kita tercinta dicapai bukan dengan senjata, tetapi melalui <strong>kebijaksanaan, tolak ansur, dan perpaduan erat</strong> ketiga-tiga bapa kemerdekaan ini!",
+        btnMerdekaChant: "Laungkan MERDEKA! 🗣️",
+        btnExploreTimeline: "Teroka Garis Masa",
+        badgeUnitySymbol: "Simbol Muhibbah Sejati",
+        badgeUnitySub: "Melayu, Cina & India bersatu demi masa depan negara tercinta!",
+        toastText: "Laungan keramat Tunku pada 31 Ogos 1957 disambut sorakan ribuan rakyat di Stadium Merdeka!",
+        heroSecTag: "Tokoh Kebanggaan Kita",
+        heroSecTitle: "Kenali 3 Wira Kemerdekaan Kita",
+        heroSecDesc: "Klik setiap kad wira untuk membaca kisah hebat dan menaikkan Meter Perpaduan!",
+        funfactTitle: "Tahukah Adik-adik di Sekolah?",
+        funfactDesc: "Semasa rombongan Merdeka ke London pada tahun 1956, kaum wanita dari pelbagai kaum menderma rantai dan gelang emas mereka secara sukarela demi membiayai tambang Tunku dan rakan-rakan seperjuangan!",
+        funfactBtn: "Lihat Garis Masa ➔",
+        timelineTag: "🗺️ Kembara Sejarah 1949 - 1957",
+        timelineTitle: "Perjalanan Menuju Hari Kemerdekaan",
+        timelineDesc: "Ikuti laluan bersejarah bagaimana ketiga-tiga wira kita bersatu hati merealisasikan detik keramat kemerdekaan Persekutuan Tanah Melayu!",
+        quizTag: "🎯 Ujian Kefahaman Murid",
+        quizTitle: "Cabaran Kuiz Wira Merdeka!",
+        quizDesc: "Jawab 3 soalan mudah ini untuk membuka <strong>\"Lencana Wira Sejarah Cilik\"</strong> dan capai 100% pada Meter Perpaduan!",
+        badgePill: "Tahniah Murid Cemerlang!",
+        badgeTitle: "Kamu Berjaya Memperoleh Lencana Wira Sejarah!",
+        badgeDesc: "Hebatnya kamu! Kamu telah membuktikan kefahaman tentang jasa Tunku Abdul Rahman, Tun Tan Cheng Lock, dan Tun V.T. Sambanthan. Teruskan menjaga perpaduan negara kita!",
+        btnRetryQuiz: "Cuba Kuiz Semula 🔄",
+        btnShoutAgain: "Laung Merdeka! 🗣️",
+        footerCurriculum: "Modul Pembelajaran Interaktif KSSR Sejarah Rendah",
+        footerMotto: "Disusun khas untuk anak bangsa Malaysia • Bersatu Kita Teguh, Bercerai Kita Roboh!",
+        btnLearnSecret: "Ketahui Rahsia Kejayaan 🔎",
+        btnCloseSecret: "Tutup Info Ringkas ✖",
+        heroes: [
+          {
+            id: "tunku",
+            emoji: "👑",
+            name: "Tunku Abdul Rahman",
+            fullname: "Putra Al-Haj ibni Almarhum Sultan Abdul Hamid Halim Shah",
+            years: "1903 – 1990",
+            superpower: "🛡️ Bapa Kemerdekaan",
+            role: "Perdana Menteri Malaysia Pertama",
+            bgClass: "bg-amber-50",
+            avatarBg: "bg-amber-200",
+            btnColor: "bg-yellow-100 hover:bg-yellow-200 text-msia-blue",
+            points: [
+              "<strong>Ketua Rundingan:</strong> Memimpin Rombongan Merdeka ke London pada tahun 1956 dengan penuh diplomasi.",
+              "<strong>Bapa Perpaduan:</strong> Menyatukan pelbagai kaum di bawah payung Parti Perikatan berasaskan rasa hormat.",
+              "<strong>Detik Bersejarah:</strong> Melaungkan 'MERDEKA!' sebanyak 7 kali di Stadium Merdeka pada 31 Ogos 1957."
+            ],
+            secretTitle: "💡 Kata-kata Emas Tunku:",
+            secretText: "\"Kita semua rakyat Malaysia. Inilah ikatan kita. Marilah kita ingat bahawa toleransi adalah kekuatan kita yang paling hebat!\""
+          },
+          {
+            id: "tan",
+            emoji: "👓",
+            name: "Tun Tan Cheng Lock",
+            fullname: "Tokoh Negarawan & Pengasas Persatuan Cina Malaya",
+            years: "1883 – 1960",
+            superpower: "🤝 Pejuang Perpaduan",
+            role: "Presiden MCA Pertama (1949)",
+            bgClass: "bg-red-50",
+            avatarBg: "bg-rose-200",
+            btnColor: "bg-rose-100 hover:bg-rose-200 text-msia-red",
+            points: [
+              "<strong>Membina Jambatan Muhibbah:</strong> Percaya sepenuh hati bahawa kaum Melayu dan Cina mesti hidup bersatu-padu.",
+              "<strong>Membela Penduduk:</strong> Menubuhkan MCA pada 1949 demi membantu kebajikan penduduk di Kampung Baru semasa Darurat.",
+              "<strong>Tunjang Perikatan:</strong> Bekerjasama rapat dengan Tunku bagi memenangi Pilihan Raya Majlis Perbandaran KL 1952."
+            ],
+            secretTitle: "💡 Fakta Menarik Tun Tan:",
+            secretText: "Dilahirkan di Melaka, beliau fasih pelbagai bahasa dan sentiasa berpesan kepada generasi muda supaya setia sepenuhnya kepada Tanah Melayu!"
+          },
+          {
+            id: "sambanthan",
+            emoji: "🌺",
+            name: "Tun V.T. Sambanthan",
+            fullname: "Pemimpin Berjiwa Rakyat & Presiden Kongres India Se-Malaya",
+            years: "1919 – 1979",
+            superpower: "📚 Wira Prihatin Rakyat",
+            role: "Presiden MIC Ke-5 (1955-1973)",
+            bgClass: "bg-blue-50",
+            avatarBg: "bg-indigo-200",
+            btnColor: "bg-blue-100 hover:bg-blue-200 text-msia-blue",
+            points: [
+              "<strong>Lengkapkan Tiga Sahabat:</strong> Membawa MIC menyertai UMNO dan MCA bagi membentuk Parti Perikatan yang kukuh.",
+              "<strong>Tandatangani Kemerdekaan:</strong> Menjadi antara pemimpin utama yang menandatangani Perjanjian Kemerdekaan di London.",
+              "<strong>Membela Nasib Pekerja:</strong> Menubuhkan Koperasi NLFCS untuk membantu pekerja ladang memiliki tanah dan memajukan pendidikan."
+            ],
+            secretTitle: "💡 Ikon Kesederhanaan:",
+            secretText: "Tun Sambanthan dikenali ramai kerana memakai pakaian tradisional Dhoti semasa persidangan rasmi dan amat ramah dengan murid sekolah!"
+          }
+        ],
+        timeline: [
+          {
+            year: "1949",
+            badge: "Februari 1949",
+            title: "Penubuhan MCA oleh Tun Tan Cheng Lock",
+            desc: "Tun Tan Cheng Lock menubuhkan Persatuan Cina Malaya (MCA) untuk membantu penempatan penduduk semasa zaman Darurat dan mengajak masyarakat Cina taat setia kepada Malaya.",
+            note: "🤝 Permulaan Kerjasama Kaum",
+            pinColor: "bg-rose-400"
+          },
+          {
+            year: "1951",
+            badge: "Ogos 1951",
+            title: "Tunku Abdul Rahman Memimpin UMNO",
+            desc: "Tunku dilantik sebagai Presiden UMNO dan menegaskan bahawa kunci kemerdekaan adalah kerjasama erat antara kaum Melayu, Cina, dan India.",
+            note: "👑 Pemimpin Utama Perpaduan",
+            pinColor: "bg-amber-400"
+          },
+          {
+            year: "1954-55",
+            badge: "1954 – Julai 1955",
+            title: "Parti Perikatan & Kemenangan 51/52 Kerusi",
+            desc: "Dengan Tun V.T. Sambanthan memimpin MIC, gabungan Tiga Sahabat (UMNO, MCA, MIC) bertanding bersama dan menyapu bersih 51 daripada 52 kerusi yang dipertandingkan!",
+            note: "🏆 Bukti Mandat Rakyat Malaya",
+            pinColor: "bg-blue-400"
+          },
+          {
+            year: "1956",
+            badge: "Februari 1956",
+            title: "Misi Rombongan Merdeka ke London",
+            desc: "Tunku bersama wakil Raja-raja Melayu dan Parti Perikatan belayar ke London. Rundingan berjaya menetapkan tarikh kemerdekaan pada 31 Ogos 1957.",
+            note: "🚢 Kejayaan Diplomasi Damai",
+            pinColor: "bg-indigo-500"
+          },
+          {
+            year: "1957",
+            badge: "31 Ogos 1957",
+            title: "Laungan Keramat di Stadium Merdeka!",
+            desc: "Tepat 9.30 pagi, di hadapan lebih 20,000 rakyat pelbagai bangsa, Tunku mengangkat tangan melaungkan 'MERDEKA!' sebanyak 7 kali diiringi kibaran bendera kebangsaan.",
+            note: "⭐ Lahirnya Negara Berdaulat!",
+            pinColor: "bg-msia-red",
+            isFinal: true
+          }
+        ],
+        quizQuestions: [
+          {
+            id: 1,
+            q: "1. Siapakah tokoh yang digelar sebagai 'Bapa Kemerdekaan' dan Perdana Menteri pertama Malaysia?",
+            options: [
+              { key: "A", text: "Tun Tan Cheng Lock", correct: false },
+              { key: "B", text: "Tunku Abdul Rahman Putra Al-Haj", correct: true },
+              { key: "C", text: "Tun V.T. Sambanthan", correct: false },
+              { key: "D", text: "Sir Henry Gurney", correct: false }
+            ]
+          },
+          {
+            id: 2,
+            q: "2. Apakah parti yang diasaskan oleh Tun Tan Cheng Lock pada tahun 1949 untuk menjaga kebajikan kaum Cina di Kampung Baru?",
+            options: [
+              { key: "A", text: "MCA (Persatuan Cina Malaya)", correct: true },
+              { key: "B", text: "MIC (Kongres India Se-Malaya)", correct: false },
+              { key: "C", text: "UMNO", correct: false },
+              { key: "D", text: "Parti Buruh Malaya", correct: false }
+            ]
+          },
+          {
+            id: 3,
+            q: "3. Berapakah kali Tunku melaungkan perkataan 'MERDEKA!' di Stadium Merdeka pada 31 Ogos 1957?",
+            options: [
+              { key: "A", text: "3 kali", correct: false },
+              { key: "B", text: "5 kali", correct: false },
+              { key: "C", text: "7 kali", correct: true },
+              { key: "D", text: "10 kali", correct: false }
+            ]
+          }
+        ]
+      },
+      en: {
+        appTitle: "Merdeka Heroes!",
+        appSubtitle: "3 Friends Who Fought for Independence 🇲🇾",
+        meterLabel: "Unity Meter:",
+        navHeroes: "Heroes",
+        navTimeline: "Timeline",
+        navQuiz: "Quiz",
+        heroPill: "🌟 Learn History with Our Heroes",
+        heroTitle: "3 Friends, 1 Dream:<br><span class=\"text-msia-yellow underline decoration-wavy decoration-msia-red\">MERDEKA!</span>",
+        heroDesc: "Did you know? Our country's independence was won not through weapons or war, but through <strong>wisdom, tolerance, and close unity</strong> among our founding fathers!",
+        btnMerdekaChant: "Shout MERDEKA! 🗣️",
+        btnExploreTimeline: "Explore Timeline",
+        badgeUnitySymbol: "True Symbol of Muhibbah",
+        badgeUnitySub: "Malay, Chinese & Indian communities united for the future of our beloved nation!",
+        toastText: "Tunku's historic chant on 31 August 1957 was cheered by tens of thousands of citizens at Stadium Merdeka!",
+        heroSecTag: "National Pride",
+        heroSecTitle: "Meet Our 3 Independence Heroes",
+        heroSecDesc: "Click each hero's card to reveal inspiring stories and boost the Unity Meter!",
+        funfactTitle: "Did You Know at School?",
+        funfactDesc: "During the 1956 Merdeka Mission to London, women across Malaya voluntarily donated their gold necklaces and rings to help fund tickets for Tunku and his delegation!",
+        funfactBtn: "View Timeline ➔",
+        timelineTag: "🗺️ Historic Journey 1949 - 1957",
+        timelineTitle: "The Road to Independence Day",
+        timelineDesc: "Follow the historic path showing how our three leaders worked shoulder-to-shoulder to achieve Malaya's freedom!",
+        quizTag: "🎯 Junior Student Challenge",
+        quizTitle: "Merdeka Heroes Quiz Challenge!",
+        quizDesc: "Answer these 3 fun questions correctly to unlock the <strong>\"Junior Historian Badge\"</strong> and reach 100% on the Unity Meter!",
+        badgePill: "Congratulations Star Student!",
+        badgeTitle: "You Earned the Junior Historian Badge!",
+        badgeDesc: "Amazing job! You have demonstrated great understanding of Tunku Abdul Rahman, Tun Tan Cheng Lock, and Tun V.T. Sambanthan. Keep safeguarding Malaysia's unity!",
+        btnRetryQuiz: "Try Quiz Again 🔄",
+        btnShoutAgain: "Shout Merdeka! 🗣️",
+        footerCurriculum: "Primary School KSSR History Interactive Learning Module",
+        footerMotto: "Created with love for Malaysian children • United We Stand, Divided We Fall!",
+        btnLearnSecret: "Discover Secret Story 🔎",
+        btnCloseSecret: "Close Short Info ✖",
+        heroes: [
+          {
+            id: "tunku",
+            emoji: "👑",
+            name: "Tunku Abdul Rahman",
+            fullname: "Putra Al-Haj ibni Almarhum Sultan Abdul Hamid Halim Shah",
+            years: "1903 – 1990",
+            superpower: "🛡️ Father of Independence",
+            role: "First Prime Minister of Malaysia",
+            bgClass: "bg-amber-50",
+            avatarBg: "bg-amber-200",
+            btnColor: "bg-yellow-100 hover:bg-yellow-200 text-msia-blue",
+            points: [
+              "<strong>Chief Diplomat:</strong> Led the Merdeka Delegation to London in 1956 to negotiate peace and freedom.",
+              "<strong>Unifying Leader:</strong> United all communities under the Alliance Party based on mutual respect and goodwill.",
+              "<strong>Historic Roar:</strong> Chanted 'MERDEKA!' 7 times at Stadium Merdeka on 31 August 1957."
+            ],
+            secretTitle: "💡 Tunku's Golden Words:",
+            secretText: "\"We are all Malaysians. This is the bond that unites us. Let us always remember that tolerance is our greatest strength!\""
+          },
+          {
+            id: "tan",
+            emoji: "👓",
+            name: "Tun Tan Cheng Lock",
+            fullname: "Distinguished Statesman & Founder of Malayan Chinese Association",
+            years: "1883 – 1960",
+            superpower: "🤝 Champion of Unity",
+            role: "First President of MCA (1949)",
+            bgClass: "bg-red-50",
+            avatarBg: "bg-rose-200",
+            btnColor: "bg-rose-100 hover:bg-rose-200 text-msia-red",
+            points: [
+              "<strong>Building Bridges:</strong> Deeply believed that the Malay and Chinese communities must work together for the nation's future.",
+              "<strong>Protecting Families:</strong> Founded MCA in 1949 to safeguard the welfare of New Village residents during the Emergency.",
+              "<strong>Pillar of Alliance:</strong> Partnered closely with Tunku to win the landmark 1952 KL Municipal Elections."
+            ],
+            secretTitle: "💡 Interesting Fact about Tun Tan:",
+            secretText: "Born in Melaka, he was multilingual and constantly reminded youth to devote their undivided loyalty to Malaya!"
+          },
+          {
+            id: "sambanthan",
+            emoji: "🌺",
+            name: "Tun V.T. Sambanthan",
+            fullname: "Caring Community Leader & President of Malayan Indian Congress",
+            years: "1919 – 1979",
+            superpower: "📚 Caring Workers' Hero",
+            role: "5th President of MIC (1955-1973)",
+            bgClass: "bg-blue-50",
+            avatarBg: "bg-indigo-200",
+            btnColor: "bg-blue-100 hover:bg-blue-200 text-msia-blue",
+            points: [
+              "<strong>Completing the Trio:</strong> Brought MIC into the coalition with UMNO and MCA to build a strong Alliance.",
+              "<strong>Signatory of Freedom:</strong> Was one of the key national leaders who signed the 1957 London Independence Agreement.",
+              "<strong>Champion for Workers:</strong> Established the NLFCS cooperative to help plantation families own land and pursue education."
+            ],
+            secretTitle: "💡 Icon of Humility:",
+            secretText: "Tun Sambanthan was celebrated for wearing traditional Dhoti attire at high-level meetings and was beloved by school children!"
+          }
+        ],
+        timeline: [
+          {
+            year: "1949",
+            badge: "February 1949",
+            title: "Founding of MCA by Tun Tan Cheng Lock",
+            desc: "Tun Tan Cheng Lock founded the Malayan Chinese Association (MCA) to assist villagers during the Emergency and build patriotic loyalty to Malaya.",
+            note: "🤝 Beginning of Inter-ethnic Coalition",
+            pinColor: "bg-rose-400"
+          },
+          {
+            year: "1951",
+            badge: "August 1951",
+            title: "Tunku Abdul Rahman Leads UMNO",
+            desc: "Tunku assumed presidency of UMNO and immediately stressed that Malayan freedom depended on harmony among Malays, Chinese, and Indians.",
+            note: "👑 Visionary Leader of Harmony",
+            pinColor: "bg-amber-400"
+          },
+          {
+            year: "1954-55",
+            badge: "1954 – July 1955",
+            title: "The Alliance & Landslide Victory (51/52 Seats)",
+            desc: "With Tun V.T. Sambanthan leading MIC, the three friends united under the Alliance Party, winning 51 out of 52 seats in the 1955 Federal Election!",
+            note: "🏆 Proof of the People's Mandate",
+            pinColor: "bg-blue-400"
+          },
+          {
+            year: "1956",
+            badge: "February 1956",
+            title: "The Merdeka Mission to London",
+            desc: "Tunku traveled to London alongside Malay Rulers' delegates and Alliance partners. The negotiations set 31 August 1957 as Independence Day.",
+            note: "🚢 Peaceful Diplomatic Success",
+            pinColor: "bg-indigo-500"
+          },
+          {
+            year: "1957",
+            badge: "31 August 1957",
+            title: "Proclamation at Stadium Merdeka!",
+            desc: "At 9:30 AM before over 20,000 citizens of all races, Tunku raised his hand and proclaimed 'MERDEKA!' 7 times as the national flag rose into the sky.",
+            note: "⭐ Birth of an Independent Nation!",
+            pinColor: "bg-msia-red",
+            isFinal: true
+          }
+        ],
+        quizQuestions: [
+          {
+            id: 1,
+            q: "1. Who is known as the 'Father of Independence' and the first Prime Minister of Malaysia?",
+            options: [
+              { key: "A", text: "Tun Tan Cheng Lock", correct: false },
+              { key: "B", text: "Tunku Abdul Rahman Putra Al-Haj", correct: true },
+              { key: "C", text: "Tun V.T. Sambanthan", correct: false },
+              { key: "D", text: "Sir Henry Gurney", correct: false }
+            ]
+          },
+          {
+            id: 2,
+            q: "2. Which party did Tun Tan Cheng Lock establish in 1949 to care for Chinese villagers during the Emergency?",
+            options: [
+              { key: "A", text: "MCA (Malayan Chinese Association)", correct: true },
+              { key: "B", text: "MIC (Malayan Indian Congress)", correct: false },
+              { key: "C", text: "UMNO", correct: false },
+              { key: "D", text: "Malayan Labour Party", correct: false }
+            ]
+          },
+          {
+            id: 3,
+            q: "3. How many times did Tunku chant 'MERDEKA!' at Stadium Merdeka on 31 August 1957?",
+            options: [
+              { key: "A", text: "3 times", correct: false },
+              { key: "B", text: "5 times", correct: false },
+              { key: "C", text: "7 times", correct: true },
+              { key: "D", text: "10 times", correct: false }
+            ]
+          }
+        ]
+      }
+    };
+
+    // Toggle between BM and EN
+    function toggleLanguage() {
+      currentLang = (currentLang === 'ms') ? 'en' : 'ms';
+      applyTranslations();
+      renderHeroCards();
+      renderTimeline();
+      renderQuiz();
+      updateUnityMeter();
+    }
+
+    // Apply Static UI Translations
+    function applyTranslations() {
+      const data = i18n[currentLang];
+
+      // Top bar & buttons
+      document.getElementById('app-title').innerText = data.appTitle;
+      document.getElementById('app-subtitle').innerText = data.appSubtitle;
+      document.getElementById('meter-label').innerText = data.meterLabel;
+      document.getElementById('nav-text-heroes').innerText = data.navHeroes;
+      document.getElementById('nav-text-timeline').innerText = data.navTimeline;
+      document.getElementById('nav-text-quiz').innerText = data.navQuiz;
+
+      // Language Switcher Button UI
+      const langFlag = document.getElementById('lang-flag');
+      const langSwitchText = document.getElementById('lang-switch-text');
+      if (currentLang === 'ms') {
+        langFlag.innerText = '🇬🇧';
+        langSwitchText.innerText = 'EN';
+      } else {
+        langFlag.innerText = '🇲🇾';
+        langSwitchText.innerText = 'BM';
+      }
+
+      // Hero Banner
+      document.getElementById('hero-pill').innerText = data.heroPill;
+      document.getElementById('hero-title').innerHTML = data.heroTitle;
+      document.getElementById('hero-desc').innerHTML = data.heroDesc;
+      document.getElementById('btn-merdeka-chant').innerText = data.btnMerdekaChant;
+      document.getElementById('btn-explore-timeline').innerText = data.btnExploreTimeline;
+      document.getElementById('badge-unity-symbol').innerText = data.badgeUnitySymbol;
+      document.getElementById('badge-unity-sub').innerText = data.badgeUnitySub;
+      document.getElementById('toast-text').innerText = data.toastText;
+
+      // Section titles
+      document.getElementById('hero-section-tag').innerText = data.heroSecTag;
+      document.getElementById('hero-section-title').innerText = data.heroSecTitle;
+      document.getElementById('hero-section-desc').innerText = data.heroSecDesc;
+
+      // Fun fact
+      document.getElementById('funfact-title').innerText = data.funfactTitle;
+      document.getElementById('funfact-desc').innerText = data.funfactDesc;
+      document.getElementById('funfact-btn').innerText = data.funfactBtn;
+
+      // Timeline Section
+      document.getElementById('timeline-tag').innerText = data.timelineTag;
+      document.getElementById('timeline-title').innerText = data.timelineTitle;
+      document.getElementById('timeline-desc').innerText = data.timelineDesc;
+
+      // Quiz Section
+      document.getElementById('quiz-tag').innerText = data.quizTag;
+      document.getElementById('quiz-title').innerText = data.quizTitle;
+      document.getElementById('quiz-desc').innerHTML = data.quizDesc;
+      document.getElementById('badge-pill').innerText = data.badgePill;
+      document.getElementById('badge-title').innerText = data.badgeTitle;
+      document.getElementById('badge-desc').innerText = data.badgeDesc;
+      document.getElementById('btn-retry-quiz').innerText = data.btnRetryQuiz;
+      document.getElementById('btn-shout-again').innerText = data.btnShoutAgain;
+
+      // Footer
+      document.getElementById('footer-curriculum').innerText = data.footerCurriculum;
+      document.getElementById('footer-motto').innerText = data.footerMotto;
+    }
+
+    // Render Hero Cards
+    function renderHeroCards() {
+      const container = document.getElementById('heroes-cards-container');
+      const data = i18n[currentLang];
+      const heroes = data.heroes;
+
+      container.innerHTML = heroes.map(hero => {
+        const isOpened = cardsOpened[hero.id];
+        return `
+          <div class="bg-white rounded-3xl border-3 border-black shadow-comic p-5 flex flex-col justify-between transition-transform duration-200 hover:-translate-y-1">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="bg-msia-yellow text-msia-dark border border-black text-xs font-black px-2.5 py-1 rounded-full shadow-comic-sm">
+                  ${hero.superpower}
+                </span>
+                <span class="text-xs font-bold text-gray-400">${hero.years}</span>
+              </div>
+
+              <div class="w-full ${hero.bgClass} border-2 border-black rounded-2xl p-4 text-center mb-4 relative overflow-hidden">
+                <div class="w-24 h-24 mx-auto rounded-full ${hero.avatarBg} border-2 border-black flex items-center justify-center text-5xl shadow-sm mb-2">
+                  ${hero.emoji}
+                </div>
+                <h4 class="text-xl font-black text-msia-blue">${hero.name}</h4>
+                <p class="text-xs font-semibold text-gray-600 line-clamp-1">${hero.fullname}</p>
+                <div class="mt-2 inline-block bg-white border border-black rounded-lg px-2.5 py-0.5 text-[11px] font-black text-msia-red">
+                  ${hero.role}
+                </div>
+              </div>
+
+              <div class="space-y-2.5 text-xs text-gray-700">
+                ${hero.points.map(pt => `
+                  <div class="flex items-start gap-2">
+                    <i class="fa-solid fa-circle-check text-green-600 mt-0.5 text-sm shrink-0"></i>
+                    <p>${pt}</p>
+                  </div>
+                `).join('')}
+              </div>
+
+              <div id="details-${hero.id}" class="${isOpened ? '' : 'hidden'} mt-4 pt-3 border-t-2 border-dashed border-gray-300 text-xs text-gray-700 ${hero.bgClass} p-3 rounded-xl">
+                <p class="font-black text-msia-blue mb-1">${hero.secretTitle}</p>
+                <p class="italic">${hero.secretText}</p>
+              </div>
+            </div>
+
+            <button onclick="toggleHeroCard('${hero.id}')" class="mt-5 w-full py-2.5 ${hero.btnColor} border-2 border-black rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 shadow-comic-sm">
+              <span id="btn-text-${hero.id}">${isOpened ? data.btnCloseSecret : data.btnLearnSecret}</span>
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Toggle Hero Secret Fact
+    function toggleHeroCard(heroId) {
+      cardsOpened[heroId] = !cardsOpened[heroId];
+      renderHeroCards();
+      if (cardsOpened[heroId]) {
+        updateUnityMeter();
+        confetti({
+          particleCount: 25,
+          spread: 45,
+          origin: { y: 0.7 }
+        });
+      }
+    }
+
+    // Render Timeline View
+    function renderTimeline() {
+      const container = document.getElementById('timeline-container');
+      const data = i18n[currentLang];
+      const items = data.timeline;
+
+      let html = `
+        <div class="absolute top-0 bottom-0 left-6 md:left-1/2 w-2 bg-black -translate-x-1/2 rounded-full border-r-2 border-dashed border-white"></div>
+        <div class="space-y-10">
+      `;
+
+      items.forEach((item, index) => {
+        const isEven = (index % 2 === 0);
+        if (item.isFinal) {
+          // Final 1957 Banner Card
+          html += `
+            <div class="relative flex flex-col md:flex-row items-start md:items-center">
+              <div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-14 h-14 ${item.pinColor} border-3 border-black rounded-full flex items-center justify-center text-white font-black text-lg shadow-comic z-20 animate-bounce">
+                🇲🇾
+              </div>
+              <div class="ml-16 md:ml-0 md:w-full md:px-12">
+                <div class="bg-gradient-to-r from-yellow-200 via-amber-100 to-yellow-200 border-4 border-black p-6 rounded-3xl shadow-comic-lg text-center">
+                  <span class="inline-block bg-msia-red text-white border border-black text-xs font-black px-4 py-1 rounded-full uppercase tracking-widest mb-2 shadow-comic">
+                    ⭐ ${item.badge} ⭐
+                  </span>
+                  <h3 class="text-2xl sm:text-3xl font-black text-msia-blue">${item.title}</h3>
+                  <p class="text-xs sm:text-sm font-medium text-gray-800 max-w-2xl mx-auto mt-2">${item.desc}</p>
+                  
+                  <div class="mt-4 pt-3 border-t-2 border-black/20 flex flex-wrap justify-center gap-3">
+                    <button onclick="triggerMerdekaShout()" class="px-5 py-2.5 bg-msia-red text-white font-black text-xs sm:text-sm border-2 border-black rounded-xl shadow-comic hover:bg-red-700 transition">
+                      🔊 ${currentLang === 'ms' ? 'Laungkan Sekali Lagi!' : 'Shout Once More!'}
+                    </button>
+                    <button onclick="switchTab('quiz')" class="px-5 py-2.5 bg-msia-yellow text-msia-blue font-black text-xs sm:text-sm border-2 border-black rounded-xl shadow-comic hover:bg-yellow-300 transition">
+                      ${currentLang === 'ms' ? 'Uji Kefahaman Kamu ➔' : 'Test Your Knowledge ➔'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          // Alternating Left / Right Milestone Cards
+          html += `
+            <div class="relative flex flex-col md:flex-row items-start md:items-center">
+              <div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-12 h-12 ${item.pinColor} border-3 border-black rounded-full flex items-center justify-center text-white font-black text-xs sm:text-sm shadow-comic z-20">
+                ${item.year.slice(-2)}
+              </div>
+
+              ${isEven ? `
+                <div class="ml-16 md:ml-0 md:w-1/2 md:pr-12 md:text-right">
+                  <div class="bg-white border-3 border-black p-5 rounded-3xl shadow-comic hover:shadow-comic-lg transition">
+                    <span class="inline-block bg-yellow-100 text-msia-dark border border-black text-xs font-black px-2.5 py-0.5 rounded-full mb-1">
+                      ${item.badge}
+                    </span>
+                    <h4 class="text-lg font-black text-msia-blue">${item.title}</h4>
+                    <p class="text-xs text-gray-600 mt-1">${item.desc}</p>
+                    <div class="mt-3 flex items-center md:justify-end gap-2 text-xs font-black text-gray-500">
+                      <span>${item.note}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="hidden md:block md:w-1/2"></div>
+              ` : `
+                <div class="hidden md:block md:w-1/2"></div>
+                <div class="ml-16 md:ml-0 md:w-1/2 md:pl-12">
+                  <div class="bg-white border-3 border-black p-5 rounded-3xl shadow-comic hover:shadow-comic-lg transition">
+                    <span class="inline-block bg-yellow-100 text-msia-dark border border-black text-xs font-black px-2.5 py-0.5 rounded-full mb-1">
+                      ${item.badge}
+                    </span>
+                    <h4 class="text-lg font-black text-msia-blue">${item.title}</h4>
+                    <p class="text-xs text-gray-600 mt-1">${item.desc}</p>
+                    <div class="mt-3 flex items-center gap-2 text-xs font-black text-gray-500">
+                      <span>${item.note}</span>
+                    </div>
+                  </div>
+                </div>
+              `}
+            </div>
+          `;
+        }
+      });
+
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+
+    // Render Quiz View
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      const data = i18n[currentLang];
+      const questions = data.quizQuestions;
+
+      container.innerHTML = questions.map(item => {
+        const currentAns = quizState[item.id];
+        let statusText = currentLang === 'ms' ? "Belum dijawab" : "Unanswered";
+        let statusClass = "text-gray-400";
+        if (currentAns === true) {
+          statusText = currentLang === 'ms' ? "✅ Betul" : "✅ Correct";
+          statusClass = "text-green-600";
+        } else if (currentAns === false) {
+          statusText = currentLang === 'ms' ? "❌ Salah" : "❌ Incorrect";
+          statusClass = "text-red-500";
+        }
+
+        return `
+          <div class="bg-white border-3 border-black p-5 sm:p-6 rounded-3xl shadow-comic" id="q${item.id}-box">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-black bg-blue-100 text-msia-blue px-2.5 py-0.5 rounded-full border border-black">
+                ${currentLang === 'ms' ? `Soalan ${item.id} / 3` : `Question ${item.id} / 3`}
+              </span>
+              <span id="q${item.id}-status" class="text-xs font-black ${statusClass}">${statusText}</span>
+            </div>
+            <h4 class="text-base sm:text-lg font-black text-gray-900 mb-4">${item.q}</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              ${item.options.map(opt => `
+                <button onclick="handleQuizAnswer(${item.id}, ${opt.correct}, this)" 
+                  class="q-opt p-3 text-left text-xs sm:text-sm font-bold border-2 border-black rounded-xl hover:bg-yellow-50 transition shadow-comic-sm">
+                  ${opt.key}) ${opt.text}
+                </button>
+              `).join('')}
+            </div>
+            <div id="q${item.id}-feedback" class="${currentAns === null ? 'hidden' : ''} mt-3 p-3 rounded-xl border-2 text-xs font-black ${currentAns ? 'bg-green-50 border-green-500 text-green-800' : 'bg-red-50 border-red-500 text-red-800'}">
+              ${currentAns === true 
+                ? (currentLang === 'ms' ? '🎉 Tepat sekali! Jawapan kamu betul!' : '🎉 Spot on! Your answer is correct!')
+                : (currentLang === 'ms' ? '💡 Kurang tepat! Jangan putus asa, cuba lagi ya!' : '💡 Not quite! Don\'t give up, try again!')}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Check if all answered correctly to show badge
+      checkBadgeVisibility();
+    }
+
+    // Handle Quiz Answer Choice
+    function handleQuizAnswer(questionId, isCorrect, btnElement) {
+      quizState[questionId] = isCorrect;
+      const feedback = document.getElementById(`q${questionId}-feedback`);
+      const status = document.getElementById(`q${questionId}-status`);
+      const parentBox = document.getElementById(`q${questionId}-box`);
+      const allButtons = parentBox.querySelectorAll('.q-opt');
+
+      allButtons.forEach(btn => {
+        btn.classList.remove('bg-green-100', 'border-green-600', 'bg-red-100', 'border-red-600', 'text-green-900', 'text-red-900');
+        btn.disabled = true;
+      });
+
+      feedback.classList.remove('hidden');
+
+      if (isCorrect) {
+        btnElement.classList.add('bg-green-100', 'border-green-600', 'text-green-900');
+        feedback.className = "mt-3 p-3 rounded-xl border-2 text-xs font-black bg-green-50 border-green-500 text-green-800";
+        feedback.innerHTML = currentLang === 'ms' ? '🎉 Tepat sekali! Jawapan kamu betul!' : '🎉 Spot on! Your answer is correct!';
+        status.innerHTML = currentLang === 'ms' ? "✅ Betul" : "✅ Correct";
+        status.className = "text-xs font-black text-green-600";
+
+        confetti({
+          particleCount: 30,
+          spread: 60,
+          origin: { y: 0.8 }
+        });
+      } else {
+        btnElement.classList.add('bg-red-100', 'border-red-600', 'text-red-900');
+        feedback.className = "mt-3 p-3 rounded-xl border-2 text-xs font-black bg-red-50 border-red-500 text-red-800";
+        feedback.innerHTML = currentLang === 'ms' ? '💡 Kurang tepat! Jangan putus asa, rujuk semula kad wira!' : '💡 Not quite! Don\'t give up, check the hero cards!';
+        status.innerHTML = currentLang === 'ms' ? "❌ Salah" : "❌ Incorrect";
+        status.className = "text-xs font-black text-red-500";
+
+        // Enable retry after short delay
+        setTimeout(() => {
+          allButtons.forEach(btn => btn.disabled = false);
+        }, 1100);
+      }
+
+      updateUnityMeter();
+      checkBadgeVisibility();
+    }
+
+    // Check if Badge should appear
+    function checkBadgeVisibility() {
+      const badgeBox = document.getElementById('badge-box');
+      if (quizState[1] === true && quizState[2] === true && quizState[3] === true) {
+        badgeBox.classList.remove('hidden');
+        confetti({
+          particleCount: 90,
+          spread: 100,
+          origin: { y: 0.5 },
+          colors: ['#002B7F', '#ED1C24', '#FFD100', '#FFFFFF']
+        });
+      } else {
+        badgeBox.classList.add('hidden');
+      }
+    }
+
+    // Reset Quiz
+    function resetQuiz() {
+      quizState[1] = null;
+      quizState[2] = null;
+      quizState[3] = null;
+      renderQuiz();
+      updateUnityMeter();
+    }
+
+    // Update Unity Meter (Meter Perpaduan)
+    function updateUnityMeter() {
+      let score = 25; // Base score
+      if (cardsOpened.tunku) score += 10;
+      if (cardsOpened.tan) score += 10;
+      if (cardsOpened.sambanthan) score += 10;
+      if (window.visitedTimeline) score += 15;
+
+      const correctCount = Object.values(quizState).filter(val => val === true).length;
+      score += (correctCount * 10);
+
+      score = Math.min(score, 100);
+      unityScore = score;
+
+      const bar = document.getElementById('unity-progress');
+      const text = document.getElementById('unity-percentage');
+      if (bar && text) {
+        bar.style.width = score + '%';
+        text.innerText = (score === 100) ? '100% ⭐' : (score + '%');
+      }
+    }
+
+    // Switch between Intro, Timeline, and Quiz tabs
+    function switchTab(tab) {
+      const vIntro = document.getElementById('view-intro');
+      const vTimeline = document.getElementById('view-timeline');
+      const vQuiz = document.getElementById('view-quiz');
+
+      const bIntro = document.getElementById('nav-btn-intro');
+      const bTimeline = document.getElementById('nav-btn-timeline');
+      const bQuiz = document.getElementById('nav-btn-quiz');
+
+      // Hide all
+      vIntro.classList.add('hidden');
+      vTimeline.classList.add('hidden');
+      vQuiz.classList.add('hidden');
+
+      // Reset button styles
+      [bIntro, bTimeline, bQuiz].forEach(btn => {
+        btn.classList.remove('bg-msia-yellow', 'text-msia-blue');
+        btn.classList.add('bg-white', 'text-gray-700');
+      });
+
+      if (tab === 'intro') {
+        vIntro.classList.remove('hidden');
+        bIntro.classList.add('bg-msia-yellow', 'text-msia-blue');
+        bIntro.classList.remove('bg-white', 'text-gray-700');
+      } else if (tab === 'timeline') {
+        vTimeline.classList.remove('hidden');
+        bTimeline.classList.add('bg-msia-yellow', 'text-msia-blue');
+        bTimeline.classList.remove('bg-white', 'text-gray-700');
+        window.visitedTimeline = true;
+        updateUnityMeter();
+      } else if (tab === 'quiz') {
+        vQuiz.classList.remove('hidden');
+        bQuiz.classList.add('bg-msia-yellow', 'text-msia-blue');
+        bQuiz.classList.remove('bg-white', 'text-gray-700');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Audio & Speech Synthesis Chant with Confetti
+    function triggerMerdekaShout() {
+      const toast = document.getElementById('audio-toast');
+      if (toast) toast.classList.remove('hidden');
+
+      // 4-stage festive confetti
+      confetti({
+        particleCount: 50,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#002B7F', '#ED1C24', '#FFD100', '#FFFFFF']
+      });
+
+      setTimeout(() => {
+        confetti({
+          particleCount: 45,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#002B7F', '#ED1C24', '#FFD100']
+        });
+        confetti({
+          particleCount: 45,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#002B7F', '#ED1C24', '#FFD100']
+        });
+      }, 200);
+
+      // Web Speech Synthesis API
+      try {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const chantText = (currentLang === 'ms') 
+            ? "Merdeka! Merdeka! Merdeka! Bersatu kita teguh!"
+            : "Merdeka! Merdeka! Merdeka! Long live Malaysia!";
+          const utterance = new SpeechSynthesisUtterance(chantText);
+          utterance.rate = 1.05;
+          utterance.pitch = 1.25;
+          utterance.lang = (currentLang === 'ms') ? 'ms-MY' : 'en-US';
+          window.speechSynthesis.speak(utterance);
+        }
+      } catch (e) {
+        console.log('Speech API skipped or not allowed', e);
+      }
+    }
+
+    // Initialize application on load
+    window.addEventListener('DOMContentLoaded', () => {
+      applyTranslations();
+      renderHeroCards();
+      renderTimeline();
+      renderQuiz();
+      updateUnityMeter();
+    });
+  </script>
+</body>
+</html>
